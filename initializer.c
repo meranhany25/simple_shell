@@ -1,31 +1,27 @@
 #include "shell.h"
-
 /**
- * execute_command_handler - Executes the given command based on its type.
- * @command: The command to be executed.
- * @command_type: The type of the command.
+ * initializer - Executes the given command based on its type.
+ * @current_command: The command to be executed.
+ * @type_command: The type of the command.
+ * Description: This function runs forks for external
+ * /path & executes internally.
  * Return: void.
  */
-void execute_command_handler(char **command, int command_type)
+void initializer(char **current_command, int type_command)
 {
-	pid_t pid;
+	pid_t PID;
 
-	if (command_type == EXTERNAL_COMMAND || command_type == PATH_COMMAND)
+	if (type_command == EXTERNAL_COMMAND || type_command == PATH_COMMAND)
 	{
-		pid = fork();
-
-		if (pid == 0)
-		{
-			execute_command(command, command_type);
-		}
+		PID = fork();
+		if (PID == 0)
+			execute_command(current_command, type_command);
 		else
 		{
-			waitpid(pid, &status, 0);
+			waitpid(PID, &status, 0);
 			status >>= 8;
 		}
 	}
 	else
-	{
-		execute_command(command, command_type);
-	}
+		execute_command(current_command, type_command);
 }
