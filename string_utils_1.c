@@ -1,38 +1,38 @@
 #include "shell.h"
 /**
- *split_string - Splits the input string into tokens & store in an array.
- *@input: Input string to be parsed.
- *@delimiter: Delimiter character to be used.
- *Return: Array of tokens.
+ * tokenizer - Splits the input string into tokens and stores them in an array.
+ *@input_string: Input string to be parsed.
+ *@delim: Delimiter character to be used.
+ *Return: Array of tokens
  */
-char **split_string(char *input, char *delimiter)
+char **tokenizer(char *input_string, char *delim)
 {
-	int num_tokens = 0;
-	char **tokens = NULL;
+	int num_delim = 0;
+	char **av = NULL;
 	char *token = NULL;
 	char *save_ptr = NULL;
 
-	token = tokenize_string(input, delimiter, save_ptr);
+	token = _strtok_r(input_string, delim, &save_ptr);
 	while (token != NULL)
 	{
-		tokens = reallocate(tokens, sizeof(*tokens) * num_tokens,
-							sizeof(*tokens) * (num_tokens + 1));
-		tokens[num_tokens] = token;
-		token = tokenize_string(NULL, delimiter, save_ptr);
-		num_tokens++;
+		av = _realloc(av, sizeof(*av) * num_delim, sizeof(*av) * (num_delim + 1));
+		av[num_delim] = token;
+		token = _strtok_r(NULL, delim, &save_ptr);
+		num_delim++;
 	}
-	tokens = reallocate(tokens, sizeof(*tokens) * num_tokens,
-						sizeof(*tokens) * (num_tokens + 1));
-	tokens[num_tokens] = NULL;
-	return (tokens);
+
+	av = _realloc(av, sizeof(*av) * num_delim, sizeof(*av) * (num_delim + 1));
+	av[num_delim] = NULL;
+
+	return (av);
 }
 /**
- * custom_print - Prints a string to the specified output stream.
- * @string: String to be printed.
- * @stream: Output stream to print to.
- * Return: void.
+ *print - Prints a string to the specified output stream.
+ *@string: String to be printed
+ *@stream: Output stream to print to.
+ *Return: void
  */
-void custom_print(char *string, int stream)
+void print(char *string, int stream)
 {
 	int i = 0;
 
@@ -40,9 +40,9 @@ void custom_print(char *string, int stream)
 		write(stream, &string[i], 1);
 }
 /**
- * remove_newline - Removes newline characters from a string.
- * @str: String to be modified.
- * Return: void.
+ *remove_newline - Removes newline characters from a string.
+ *@str: String to be modified.
+ *Return: void
  */
 void remove_newline(char *str)
 {
@@ -57,12 +57,12 @@ void remove_newline(char *str)
 	str[i] = '\0';
 }
 /**
- * custom_strcpy - Copies a string from source to destination.
- * @source: Source string to copy from.
- * @dest: Destination buffer to copy to.
- * Return: void.
+ *_strcpy - Copies a string from source to destination.
+ *@source: Source string to copy from.
+ *@dest: Destination buffer to copy to.
+ * Return: void
  */
-void custom_strcpy(char *source, char *dest)
+void _strcpy(char *source, char *dest)
 {
 	int i = 0;
 
@@ -71,11 +71,11 @@ void custom_strcpy(char *source, char *dest)
 	dest[i] = '\0';
 }
 /**
- * custom_strlen - Calculates the length of a string.
- * @string: String to be measured.
+ *_strlen - Calculates the length of a string.
+ *@string: String to be measured.
  * Return: Length of the string.
  */
-int custom_strlen(char *string)
+int _strlen(char *string)
 {
 	int len = 0;
 
