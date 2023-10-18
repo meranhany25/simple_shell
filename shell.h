@@ -12,18 +12,20 @@
 #include <dirent.h>
 #include <signal.h>
 
-/*constants headers*/
+/*constants*/
 #define EXTERNAL_COMMAND 1
 #define INTERNAL_COMMAND 2
 #define PATH_COMMAND 3
 #define INVALID_COMMAND -1
 
 #define min(x, y) (((x) < (y)) ? (x) : (y))
+
 /**
  * struct map - A struct that maps a command name to a function.
  * @command_name: The name of the command.
  * @func: The function that executes the command.
  */
+
 typedef struct map
 {
 	char *command_name;
@@ -37,39 +39,41 @@ extern char *shell_name;
 extern int status;
 
 /*string_utils_1*/
-char **split_string(char *, char *);
-void custom_print(char *, int);
+char **tokenizer(char *, char *);
+void print(char *, int);
 void remove_newline(char *);
-void custom_strcpy(char *, char *);
-int custom_strlen(char *);
+void _strcpy(char *, char *);
+int _strlen(char *);
 
 /*string_utils_2*/
-int compare_strings(char *, char *);
-char *concatenate_strings(char *, char *);
-int prefix_length(char *, char *);
-int segment_length(char *, char *);
-char *character_search(char *, char);
+int _strcmp(char *, char *);
+char *_strcat(char *, char *);
+int _strspn(char *, char *);
+int _strcspn(char *, char *);
+char *_strchr(char *, char);
 
 /*string_utils_3*/
-char *tokenize_string(char *, char *, char **);
-int convert_string_to_integer(char *);
-void *reallocate(void *ptr, unsigned int old_size, unsigned int new_size);
-void handle_ctrl_c(int);
+char *_strtok_r(char *, char *, char **);
+int _atoi(char *);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+void ctrl_c_handler(int);
 void remove_comment(char *);
 
 /*extended_functions*/
-int determine_command_type(char *);
+int parse_command(char *);
 void execute_command(char **, int);
-char *find_command_path(char *);
-void (*get_function(char *))(char **);
-char *get_environment_variable(char *);
+char *check_path(char *);
+void (*get_func(char *))(char **);
+char *_getenv(char *);
 
-/*builtin_fuctions*/
-void print_environment_variables(char **);
-void exit_shell(char **);
+/*builtin*/
+void env(char **);
+void quit(char **);
 
-/*main*/
-extern void process_non_interactive_mode(void);
-extern void execute_command_handler(char **command, int command_type);
+/*non_interactive_function*/
+extern void non_interactive(void);
+
+/*intializer*/
+extern void initializer(char **current_command, int type_command);
 
 #endif
