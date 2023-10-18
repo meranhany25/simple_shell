@@ -77,7 +77,7 @@ int _strcspn(char *str1, char *str2)
  *_strchr - Locates a character in a string.
  *@s: The string to be searched.
  *@c: The character to be located.
- *Return: Pointer to first occurrence of character, or NULL if not found.
+ *Return: Pointer to first occurrence of character or NULL if not found.
  */
 char *_strchr(char *s, char c)
 {
