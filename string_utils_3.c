@@ -107,7 +107,7 @@ void ctrl_c_handler(int signum)
 		print("\n($) ", STDIN_FILENO);
 }
 /**
- * remove_comment - Removes/ignores everything after a '#' character.
+ * remove_comment - Removes or ignores everything after a '#' character.
  * @input: The input string.
  * Return: void
  */
