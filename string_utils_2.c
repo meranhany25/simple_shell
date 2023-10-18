@@ -1,59 +1,54 @@
 #include "shell.h"
-
 /**
- * compare_strings - Compares two strings and
- *			returns the difference between them.
- * @str1: The first string to be compared.
- * @str2: The second string to be compared.
+ *_strcmp - Compares two strings and returns the difference between them.
+ *@first: The first string to be compared.
+ *@second: The second string to be compared.
  * Return: The difference between the two strings.
  */
-int compare_strings(char *str1, char *str2)
+int _strcmp(char *first, char *second)
 {
 	int i = 0;
 
-	while (str1[i] != '\0')
+	while (first[i] != '\0')
 	{
-		if (str1[i] != str2[i])
+		if (first[i] != second[i])
 			break;
 		i++;
 	}
-	return (str1[i] - str2[i]);
+	return (first[i] - second[i]);
 }
 /**
- * concatenate_strings - Concatenates two strings
- *			and returns the new string.
- * @dest: The string to which the second string is concatenated.
- * @src: The string that is concatenated to the destination string.
+ *_strcat - Concatenates two strings and returns the new string.
+ *@destination: The string to which the second string is concatenated.
+ *@source: The string that is concatenated to the destination string.
  * Return: The address of the new string.
  */
-char *concatenate_strings(char *dest, char *src)
+char *_strcat(char *destination, char *source)
 {
-	char *new_string = NULL;
-	int dest_length = custom_strlen(dest);
-	int src_length = custom_strlen(src);
+	char *new_string =  NULL;
+	int len_dest = _strlen(destination);
+	int len_source = _strlen(source);
 
-	new_string = malloc(sizeof(*new_string) * (dest_length + src_length + 1));
-
-	custom_strcpy(dest, new_string);
-	custom_strcpy(src, new_string + dest_length);
-	new_string[dest_length + src_length] = '\0';
+	new_string = malloc(sizeof(*new_string) * (len_dest + len_source + 1));
+	_strcpy(destination, new_string);
+	_strcpy(source, new_string + len_dest);
+	new_string[len_dest + len_source] = '\0';
 	return (new_string);
 }
 /**
- * prefix_length - Calculates the length of a prefix substring
- *			in str1 that matches str2.
- * @str1: The string to be searched.
- * @str2: The string to be used as the prefix.
- * Return: The number of bytes in the initial segment of str1 that match str2.
+ *_strspn - Calculates length of a prefix substring in str1 that match str2.
+ *@str1: The string to be searched.
+ *@str2: The string to be used as the prefix.
+ *Return: The number of bytes in the initial segment of str1 that match str2.
  */
-int prefix_length(char *str1, char *str2)
+int _strspn(char *str1, char *str2)
 {
 	int i = 0;
 	int match = 0;
 
 	while (str1[i] != '\0')
 	{
-		if (character_search(str2, str1[i]) == NULL)
+		if (_strchr(str2, str1[i]) == NULL)
 			break;
 		match++;
 		i++;
@@ -61,40 +56,37 @@ int prefix_length(char *str1, char *str2)
 	return (match);
 }
 /**
- * segment_length - Calculates the length of the segment in
- *			str1 that consists of characters not in str2.
- * @str1: The string to be searched.
- * @str2: The string containing the characters to be excluded.
- * Return: The index at which a character from str1 is found in str2.
+ *_strcspn - Calculates length of segment in str1 with chars not in str2.
+ *@str1: The string to be searched.
+ *@str2: The string containing the characters to be excluded.
+ *Return: The index at which a character from str1 is found in str2.
  */
-int segment_length(char *str1, char *str2)
+int _strcspn(char *str1, char *str2)
 {
-	int length = 0;
-	int i;
+	int len = 0, i;
 
 	for (i = 0; str1[i] != '\0'; i++)
 	{
-		if (character_search(str2, str1[i]) != NULL)
+		if (_strchr(str2, str1[i]) != NULL)
 			break;
-		length++;
+		len++;
 	}
-	return (length);
+	return (len);
 }
 /**
- * character_search - Locates a character in a string.
- * @str: The string to be searched.
- * @ch: The character to be located.
- * Return: A pointer to the first occurrence of the character
- *			in the string, or NULL if not found.
+ *_strchr - Locates a character in a string.
+ *@s: The string to be searched.
+ *@c: The character to be located.
+ *Return: Pointer to first occurrence of character, or NULL if not found.
  */
-char *character_search(char *str, char ch)
+char *_strchr(char *s, char c)
 {
 	int i = 0;
 
-	for (; str[i] != ch && str[i] != '\0'; i++)
+	for (; s[i] != c && s[i] != '\0'; i++)
 		;
-	if (str[i] == ch)
-		return (str + i);
+	if (s[i] == c)
+		return (s + i);
 	else
 		return (NULL);
 }
