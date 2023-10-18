@@ -1,41 +1,36 @@
 #include "shell.h"
-
 /**
- * process_non_interactive_mode - Handles the non-interactive mode of the shell
+ * non_interactive - Handles the non-interactive mode of the shell.
+ * Description: Processes commands, reads input, executes accordingly.
  * Return: void.
  */
-void process_non_interactive_mode(void)
+void non_interactive(void)
 {
 	char **current_command = NULL;
-	int i, command_type = 0;
-	size_t buffer_size = 0;
+	int i, type_command = 0;
+	size_t n = 0;
 
 	if (!(isatty(STDIN_FILENO)))
 	{
-		while (getline(&line, &buffer_size, stdin) != -1)
+		while (getline(&line, &n, stdin) != -1)
 		{
 			remove_newline(line);
 			remove_comment(line);
-			commands = split_string(line, ";");
-
+			commands = tokenizer(line, ";");
 			for (i = 0; commands[i] != NULL; i++)
 			{
-				current_command = split_string(commands[i], " ");
-
+				current_command = tokenizer(commands[i], " ");
 				if (current_command[0] == NULL)
 				{
 					free(current_command);
 					break;
 				}
-
-				command_type = determine_command_type(current_command[0]);
-				execute_command_handler(current_command, command_type);
+				type_command = parse_command(current_command[0]);
+				initializer(current_command, type_command);
 				free(current_command);
 			}
-
 			free(commands);
 		}
-
 		free(line);
 		exit(status);
 	}
