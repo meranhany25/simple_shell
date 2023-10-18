@@ -28,8 +28,8 @@ char **tokenizer(char *input_string, char *delim)
 }
 /**
  *print - Prints a string to the specified output stream.
- *@string: String to be printed
- *@stream: Output stream to print to.
+ *@string: String to be printed.
+ *@stream: Output stream to print.
  *Return: void
  */
 void print(char *string, int stream)
